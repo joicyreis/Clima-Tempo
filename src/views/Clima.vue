@@ -2,7 +2,7 @@
   <div class="clima">
     <b-navbar type="dark" variant="info">
       <b-navbar-brand>
-        <router-link class="btn-voltar" to="/home">
+        <router-link class="btn-voltar" to="/">
           <b-icon-arrow-left />
           voltar
         </router-link>

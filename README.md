@@ -20,4 +20,4 @@ Para abrir a aplicação, execute o comando:
 
 `npm run serve`
 
-Acesse a rota: `localhost:<porta>/home`
+Acesse a rota: `localhost:<porta>`
