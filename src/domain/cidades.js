@@ -1,5 +1,5 @@
 import api from './api.service';
-const chave = 'cb4861466c75a1d2cc1bab160e5cbaf1'
+const chave = ''
 
 const Cidades = {
     getCidades: async (dados) => {
