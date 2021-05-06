@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import CitiesBrasil from '../data/data-source/br-cities'
+import cidadesBrasileiras from '../domain/cidades-brasileiras'
 export default {
   name: 'Home',
   components: {
@@ -25,16 +25,19 @@ export default {
       focus: false,
       cidade: '',
       cidadeEncontrada: [],
+      listaCidades: [],
     }
+  },
+  created() {
+    this.listaCidades = cidadesBrasileiras.cidades;
   },
   methods: {
     buscarCidade(cidade) {
-      this.cidadeEncontrada = CitiesBrasil.filter(city => {
-        if(city.nome === cidade.charAt(0).toUpperCase() + cidade.slice(1)) {
+      this.cidadeEncontrada = this.listaCidades.filter(city => {
+        if(city.nome.toLowerCase() === cidade.toLowerCase()) {
           return city.nome
         }
       });
-      return this.cidadeEncontrada
     },
     climaBR() {
       this.$router.push({name: 'Clima', params: { infoCidade: this.cidadeEncontrada }})

@@ -1,5 +1,5 @@
 <template>
-  <div class="clima" v-loading="loading">
+  <div class="clima">
     <b-navbar type="dark" variant="info">
       <b-navbar-brand>
         <router-link class="btn-voltar" to="/home">
@@ -11,43 +11,40 @@
     <div class="card-clima">
       <div class="info-clima">
         <div>{{dadosCidade[0].nome}} | {{new Date().toLocaleDateString('pt-br')}}</div>
-        <div class="graus">{{dadosClima.currentTemp}}<div class="icone-graus">ºC</div></div>
+        <div class="graus">{{dadosClima.tempAtual}}<div class="icone-graus">ºC</div></div>
         <div class="icone">
-          <img :src="`${dadosClima.details[0].icon}`">
+          <img :src="`${dadosClima.detalhes[0].icone}`">
         </div>
-        <div class="tempo">{{dadosClima.details[0].condition.toUpperCase()}}</div>
+        <div class="tempo">{{dadosClima.detalhes[0].descricao.toUpperCase()}}</div>
         <div class="info-tempo">
-          <i class="bi-alarm"></i>
-          {{dadosClima.details[0].minTemp}}% |
-          <i class="bi-alarm"></i>
-          {{dadosClima.details[0].maxTemp}}%
+          {{dadosClima.detalhes[0].minTemp}}% |
+          {{dadosClima.detalhes[0].maxTemp}}%
         </div>
         <b-button class="btn-detalhes" @click="detalhesClima = true">Ver detalhes</b-button>
       </div>
       <div v-if="detalhesClima" class="modal-clima">
-        <b-card class="modal-info-clima">
-          <div v-for="(detail, index) in dadosClima.details" :key="index">
+        <b-card class="card-info-clima">
+          <div v-for="(item, index) in dadosClima.detalhes" :key="index">
             <div class="colunas">
-              <div class="coluna-um">
+              <div class="card-icone">
                 <div class="icone-modal">
-                  <img :src="`${detail.icon}`" alt="">
+                  <img :src="`${item.icone}`" alt="">
                 </div>
               </div>
-              <div class="coluna-dois">
+              <div class="card-data">
                 <div class="data">{{buscarData(new Date(), index)}}</div>
-                <div class="clima">{{detail.condition}}</div>
+                <div class="clima">{{item.descricao}}</div>
               </div>
-              <div class="coluna-tres">
+              <div class="card-temperatura">
                 <div class="temperatura">
-                  <b-icon icon="arrow"></b-icon>
-                  {{detail.minTemp}}
+                  {{item.minTemp}}
                   <div class="i-graus">ºC</div>
                 </div>
-                <div class="temperatura">{{detail.maxTemp}}<div class="i-graus">ºC</div></div>
+                <div class="temperatura">{{item.maxTemp}}<div class="i-graus">ºC</div></div>
               </div>
-              <div class="coluna-quatro">
-                <div class="probabilidade">{{detail.pop}}%</div>
-                <div class="probabilidade">{{detail.humidity}}%</div>
+              <div class="card-probabilidade">
+                <div class="probabilidade">{{item.chuva}}%</div>
+                <div class="probabilidade">{{item.humidade}}%</div>
               </div>
             </div>
           </div>
@@ -59,7 +56,7 @@
 </template>
 
 <script>
-import Cities from '../domain/cities'
+import Cidades from '../domain/cidades'
 export default {
   data() {
     return {
@@ -69,12 +66,10 @@ export default {
     }
   },
   created() {
-    Cities.getCities(this.dadosCidade).then((response) => {
+    Cidades.getCidades(this.dadosCidade).then((response) => {
       this.dadosClima = response;
-      this.loading = false;
     }).catch((err) => {
-      console.log(err);
-      this.loading = false;
+      console.err(err);
     });
   },
   methods: {
@@ -158,7 +153,7 @@ export default {
   align-items: center;
 }
 
-.modal-info-clima {
+.card-info-clima {
   z-index: 1000;
   width: 500px;
 }
@@ -182,15 +177,15 @@ export default {
   outline: none;
 }
 
-.coluna-dois {
+.card-data {
   width: 120px;
 }
 
-.coluna-tres {
+.card-temperatura {
   width: 80px;
 }
 
-.coluna-quatro {
+.card-probabilidade {
   width: 80px;
 }
 

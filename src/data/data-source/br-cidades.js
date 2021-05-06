@@ -1,4 +1,4 @@
-const citiesBrasil = [
+const cidadesBrasil = [
     {
       id: 5200050,
       nome: 'Abadia de Goiás',
@@ -83551,4 +83551,4 @@ const citiesBrasil = [
     },
   ];
   
-export default citiesBrasil;
+export default cidadesBrasil;
